@@ -18,107 +18,6 @@
 
 @prefix ctx:         <https://github.com/nicosResearchAndDevelopment/ctx#> .
 
-ctx:Incident
-    a                owl:Class ;
-    rdfs:subClassOf  ctx:Context ;
-    rdfs:label       "Incident"@en ;
-    rdfs:label       "Vorfall"@de ;
-    skos:notation    "ctx:Incident"^^xsd:string ;
-    skos:prefLabel   "Incident"^^xsd:string ;
-    rdfs:isDefinedBy ctx: .
-
-ctx:incident
-    a                owl:ObjectProperty ;
-    rdfs:label       "Incident"@en ;
-    rdfs:label       "vorfall"@de ;
-    skos:notation    "ctx:incident"^^xsd:string ;
-    skos:prefLabel   "Incident"^^xsd:string ;
-    rdfs:domain      ctx:Incident ;
-    rdfs:range       ctx:Incident ; ## CARD: [0..n]
-    rdfs:isDefinedBy ctx: .
-
-ctx:vector
-    a                owl:ObjectProperty ;
-    rdfs:label       "Vector"@en ;
-    rdfs:label       "Vektor"@de ;
-    skos:notation    "ctx:vector"^^xsd:string ;
-    skos:prefLabel   "Vector"^^xsd:string ;
-    rdfs:domain      ctx:Incident ;
-    rdfs:range       ctx:Actor ; ## CARD: [0..n]
-    rdfs:isDefinedBy ctx: .
-
-ctx:target
-    a                owl:ObjectProperty ;
-    rdfs:label       "Target"@en ;
-    rdfs:label       "Ziel"@de ;
-    skos:notation    "ctx:target"^^xsd:string ;
-    skos:prefLabel   "Target"^^xsd:string ;
-    rdfs:domain      ctx:Incident ;
-    rdfs:range       rdfs:Resource ; ## CARD: [0..n]
-    rdfs:isDefinedBy ctx: .
-
-## region Category
-ctx:IncidentCategory
-    a                owl:Class ;
-    a                skos:Concept ;
-    rdfs:subClassOf  owl:Thing ;
-    rdfs:label       "Incident Category"@en ;
-    rdfs:label       "Kategorie, Vorfall"@de ;
-    skos:notation    "ctx:IncidentCategory"^^xsd:string ;
-    skos:prefLabel   "Incident Category"^^xsd:string ;
-    rdfs:isDefinedBy ctx: .
-
-ctx:incidentCategory
-    a                owl:ObjectProperty ;
-    rdfs:label       "Incident Category"@en ;
-    rdfs:label       "Kategorie, Vorfall"@de ;
-    skos:notation    "ctx:incidentCategory"^^xsd:string ;
-    skos:prefLabel   "Incident Category"^^xsd:string ;
-    rdfs:domain      ctx:Incident ;
-    rdfs:range       ctx:IncidentCategory ; ## CARD: [0..n]
-    rdfs:isDefinedBy ctx: .
-
-## region Category Individual
-
-## region Category Individual Intrusion
-
-ctx:Intrusion
-    a                owl:Class ;
-    a                skos:Concept ;
-    rdfs:subClassOf  ctx:IncidentCategory ;
-#    a                ctx:System, skos:Concept, owl:NamedIndividual ;
-    rdfs:label       "Intrusion"@en ;
-    rdfs:label       "Eingriff"@de ;
-    skos:notation    "ctx:Intrusion"^^xsd:string ;
-    skos:prefLabel   "Intrusion"^^xsd:string ;
-    skos:broader     ctx:IncidentCategory ;
-    skos:narrower    ctx:Intrusion_Burglary ;
-    rdfs:isDefinedBy ctx: .
-
-ctx:Intrusion_Burglary
-    a                ctx:Intrusion, skos:Concept, owl:NamedIndividual ;
-    rdfs:label       "Intrusion, Burglary"@en ;
-    rdfs:label       "Eingriff, Diebstahl"@de ;
-    skos:notation    "ctx:Intrusion_Burglary"^^xsd:string ;
-    skos:prefLabel   "Intrusion, Burglary"^^xsd:string ;
-    skos:broader     ctx:Intrusion ;
-    rdfs:isDefinedBy ctx: .
-
-ctx:Intrusion_Physical
-    a                ctx:Intrusion, skos:Concept, owl:NamedIndividual ;
-    rdfs:label       "Intrusion, Physical"@en ;
-    rdfs:label       "Eingriff, physikalisch"@de ;
-    skos:notation    "ctx:Intrusion_Physical"^^xsd:string ;
-    skos:prefLabel   "Intrusion, Physical"^^xsd:string ;
-    skos:broader     ctx:Intrusion ;
-    rdfs:isDefinedBy ctx: .
-
-## endregion Category Individual Intrusion
-
-## endregion Category Individual
-
-## endregion Category
-
 ## EXAMPLE Bob and Bee
 
 #<urn:person:bob>
@@ -137,6 +36,8 @@ ctx:Intrusion_Physical
     prov:actedOnBehalfOf <urn:insect:hive> ;
     rdfs:isDefinedBy     ctx: .
 
+## EXAMPLE Bob and Bee, the incident
+
 <urn:person:bob:incident:666>
     a                    ctx:Incident ;
     ctx:system           "system/private/recreation"^^xsd:string ;
@@ -149,7 +50,7 @@ ctx:Intrusion_Physical
     prov:wasGeneratedBy  <urn:person:bob> ;
     ctx:hasBeginning     "2024-03-08T13:59:01Z"^^xsd:dateTimeStamp ;     ## REM: bee starts stitching
     ctx:hasEnd           "2024-03-08T15:00:00Z"^^xsd:dateTimeStamp ;     ## REM: bob stops enjoying the sun
-    prov:generatedAtTime "2024-03-08T15:03:00.001Z"^^xsd:dateTimeStamp ; ## REM: Bob telling Alice what had happened...
+    prov:generatedAtTime "2024-03-08T15:03:00.001Z"^^xsd:dateTimeStamp ; ## REM: Bob writes it down (some sort ;-) of writing)...
     ## REM: 'ctx:observer <urn:person:bob>' :: Some sort of *Sensor*.
     ##      To be more precise: <urn:person:bob:hand:left>
     ##      To be more precise: <urn:person:bob:hand:left:thumb>
@@ -201,4 +102,14 @@ ctx:Intrusion_Physical
 #                           prov:wasEndedBy    <urn:person:bob> ;
 #                           prov:startedAtTime "2024-03-08T13:59:08Z"^^xsd:dateTimeStamp ;
 #                           prov:endedAtTime   "2024-03-08T15:00:00Z"^^xsd:dateTimeStamp ; ] ;
+    rdfs:isDefinedBy     <urn:person:bob> .
+
+## EXAMPLE Bob and Bee, presentation of given incident
+
+<urn:person:bob:presentation:incident-bee-for-alice>
+    a                    ctx:Presentation ;
+    prov:generatedAtTime "2024-03-09T16:07:00Z"^^xsd:dateTimeStamp ; ## REM: Bob telling Alice what had happened...
+    ctx:hasBeginning     "2024-03-09T16:07:00Z"^^xsd:dateTimeStamp ;     ## REM: bee starts stitching
+    ctx:hasEnd           "2024-03-09T16:07:10Z"^^xsd:dateTimeStamp ;     ## REM: bob stops enjoying the sun
+    ctx:context          <urn:person:bob:incident:666> ;
     rdfs:isDefinedBy     <urn:person:bob> .

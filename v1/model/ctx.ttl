@@ -245,6 +245,16 @@ ctx:attachment
 
 ## endregion Attachment
 
+ctx:system
+    ## REM: intentionally left open: it will be defined by given use case...
+    a                rdf:Property ;
+    rdfs:label       "System"@en ;
+    rdfs:label       "System"@de ;
+    skos:notation    "ctx:system"^^xsd:string ;
+    skos:prefLabel   "System"^^xsd:string ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       rdfs:Resource ; ## CARD: [0..n] !!!
+    rdfs:isDefinedBy ctx: .
 
 ctx:sector
     a                rdf:Property ;
@@ -256,6 +266,17 @@ ctx:sector
     rdfs:domain      prov:Activity ;
     rdfs:range       rdfs:Resource ; ## CARD: [0..1] !!!
     rdfs:comment     """Everything in CTX can be flavoured this relation. Se NIS2, RCE EU-Directives, for example."""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:cause
+    ## REM: intentionally left open: it will be defined by given use case...
+    a                rdf:Property ;
+    rdfs:label       "Cause"@en ;
+    rdfs:label       "Grund"@de ;
+    skos:notation    "ctx:cause"^^xsd:string ;
+    skos:prefLabel   "Cause"^^xsd:string ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       rdfs:Resource ; ## CARD: [0..n] !!!
     rdfs:isDefinedBy ctx: .
 
 ctx:Actor
