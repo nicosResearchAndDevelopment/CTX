@@ -43,9 +43,9 @@ ctx:
     vann:preferredNamespacePrefix "ctx:" ;
     void:vocabulary               vann:, void:, voaf:, dct: ; .
 
-credential:wallet
-    rdfs:domain      ctx:Actor ;
-    rdfs:isDefinedBy ctx: .
+#credential:wallet
+#    rdfs:domain      ctx:Actor ;
+#    rdfs:isDefinedBy ctx: .
 
 ctx:hasBeginning
     a                owl:DatatypeProperty ;
@@ -180,6 +180,71 @@ ctx:environment
     rdfs:domain      ctx:Context ;
     rdfs:range       ctx:Environment ; ## CARD: [1..1]
     rdfs:isDefinedBy ctx: .
+
+## region Attachment
+
+ctx:Attachment
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Entity ;
+    rdfs:label       "Attachment"@en ;
+    rdfs:label       "Anhang"@de ;
+    skos:notation    "ctx:Attachment"^^xsd:string ;
+    skos:prefLabel   "Attachment"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:file
+    a                owl:DatatypeProperty ;
+    rdfs:label       "File"@en ;
+    rdfs:label       "Datei"@de ;
+    skos:notation    "ctx:file"^^xsd:string ;
+    skos:prefLabel   "Datei"^^xsd:string ;
+    rdfs:domain      ctx:Attachment ;
+    rdfs:range       xsd:anyURI ; ## CARD: [0..1]
+    rdfs:range       xsd:string ; ## CARD: [0..1]
+    rdfs:isDefinedBy ctx: .
+
+ctx:contentType
+    a                owl:DatatypeProperty ;
+    rdfs:label       "Content type"@en ;
+    rdfs:label       "Inhaltstyp"@de ;
+    skos:notation    "ctx:contentType"^^xsd:string ;
+    skos:prefLabel   "Content type"^^xsd:string ;
+    rdfs:domain      ctx:Attachment ;
+    rdfs:range       xsd:string ; ## CARD: [0..1], REM: some sort of mime-type...
+    rdfs:isDefinedBy ctx: .
+
+ctx:contentLength
+    a                owl:DatatypeProperty ;
+    rdfs:label       "Content length"@en ;
+    rdfs:label       "Länge des Inhalts"@de ;
+    skos:notation    "ctx:contentLength"^^xsd:string ;
+    skos:prefLabel   "Content length"^^xsd:string ;
+    rdfs:domain      ctx:Attachment ;
+    rdfs:range       xsd:nonNegativeInteger ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:content
+    a                owl:DatatypeProperty ;
+    rdfs:label       "Content"@en ;
+    rdfs:label       "Inhalt"@de ;
+    skos:notation    "ctx:content"^^xsd:string ;
+    skos:prefLabel   "Content"^^xsd:string ;
+    rdfs:domain      ctx:Attachment ;
+    rdfs:range       xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:attachment
+    a                owl:ObjectProperty ;
+    rdfs:label       "Attachment"@en ;
+    rdfs:label       "Umgebung"@de ;
+    skos:notation    "ctx:attachment"^^xsd:string ;
+    skos:prefLabel   "Attachment"^^xsd:string ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       ctx:Attachment ; ## CARD: [1..n]
+    rdfs:isDefinedBy ctx: .
+
+## endregion Attachment
+
 
 ctx:sector
     a                rdf:Property ;

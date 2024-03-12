@@ -174,17 +174,34 @@ ctx:Intrusion_Physical
     ctx:vector           <urn:insect:hive:bee#007> ;
     ctx:target           <urn:person:bob> ;
     ctx:subject          <urn:person:bob> ;
-    ctx:mitigation       [ a                  prov:Activity ;
-                           dct:description    """Drinking a beer."""@en ;
-                           prov:wasStartedBy  <urn:person:bob> ;
-                           prov:wasEndedBy    <urn:person:bob> ;
-                           prov:startedAtTime "2024-03-08T13:59:08Z"^^xsd:dateTimeStamp ;
-                           prov:endedAtTime   "2024-03-08T14:00:04Z"^^xsd:dateTimeStamp ; ],
+    ctx:attachment       [ a                 ctx:Attachment ;
+                           dct:description   "The bee, stinging me!^"@en ;
+                           dct:description   "Die Biene, wie sie mich sticht!^"@de ;
+                           ## ctx:file          "urn:bob:mobile:photo:malicious_bee.jpeg"^^xsd:anyURI ;
+                           ctx:contentType   "image/ascii-art"^^xsd:string ;
+                           ctx:contentLength "14"^^xsd:nonNegativeInteger ;
+                           ctx:content       """
+   //
+.Oooo-->(me"""^^xsd:string ; ],
                          ##
-                         [ a                  prov:Activity ;
-                           dct:description    """Enjoying the sun."""@en ;
-                           prov:wasStartedBy  <urn:person:bob> ;
-                           prov:wasEndedBy    <urn:person:bob> ;
-                           prov:startedAtTime "2024-03-08T13:59:08Z"^^xsd:dateTimeStamp ;
-                           prov:endedAtTime   "2024-03-08T15:00:00Z"^^xsd:dateTimeStamp ; ] ;
+                         [ a                 ctx:Attachment ;
+                           ## ctx:file          "urn:bob:mobile:photo:is_me_sad.jpeg"^^xsd:anyURI ;
+                           dct:description   "It's me, sad!^"@en ;
+                           dct:description   "Das bin ich, traurig!^"@de ;
+                           ctx:contentType   "image/ascii-art"^^xsd:string ;
+                           ctx:contentLength "3"^^xsd:nonNegativeInteger ;
+                           ctx:content       ":-("^^xsd:string ; ] ;
+#    ctx:mitigation       [ a                  prov:Activity ;
+#                           dct:description    """Drinking a beer."""@en ;
+#                           prov:wasStartedBy  <urn:person:bob> ;
+#                           prov:wasEndedBy    <urn:person:bob> ;
+#                           prov:startedAtTime "2024-03-08T13:59:08Z"^^xsd:dateTimeStamp ;
+#                           prov:endedAtTime   "2024-03-08T14:00:04Z"^^xsd:dateTimeStamp ; ],
+#                         ##
+#                         [ a                  prov:Activity ;
+#                           dct:description    """Enjoying the sun."""@en ;
+#                           prov:wasStartedBy  <urn:person:bob> ;
+#                           prov:wasEndedBy    <urn:person:bob> ;
+#                           prov:startedAtTime "2024-03-08T13:59:08Z"^^xsd:dateTimeStamp ;
+#                           prov:endedAtTime   "2024-03-08T15:00:00Z"^^xsd:dateTimeStamp ; ] ;
     rdfs:isDefinedBy     <urn:person:bob> .
