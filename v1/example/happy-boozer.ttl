@@ -1,0 +1,251 @@
+@prefix dc:         <http://purl.org/dc/elements/1.1/> .
+@prefix dct:        <http://purl.org/dc/terms/> .
+@prefix foaf:       <http://xmlns.com/foaf/0.1/> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+@prefix org:        <http://www.w3.org/ns/org#> .
+@prefix odrl:       <http://www.w3.org/ns/odrl/2/> .
+@prefix profile:    <http://www.w3.org/ns/dx/prof/> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix role:       <http://www.w3.org/ns/dx/prof/role/> .
+@prefix skos:       <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann:       <http://purl.org/vocab/vann/> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix prov:       <http://www.w3.org/ns/prov#> .
+@prefix entity:     <https://github.com/nicosResearchAndDevelopment/LDS/model/concept/higher/entity/> .
+@prefix credential: <https://github.com/nicosResearchAndDevelopment/LDS/model/concept/higher/credential/> .
+
+@prefix trust:      <https://github.com/nicosResearchAndDevelopment/LDS/model/concept/higher/trust/> .
+
+@prefix ctx:        <https://github.com/nicosResearchAndDevelopment/ctx#> .
+
+trust:Trust
+    rdfs:subClassOf  odrl:Policy, odrl:Agreement ;
+    rdfs:isDefinedBy ctx: .
+
+## EXAMPLE: happy-boozer
+
+## region IS (fact, reality)
+## REM: All ISs are some kind of **Digital Twins**. To be precise: '<urn:universe>' is **NOT** *The Universe*  physical Entity and '<urn:person:alice>' is **NOT** *Alice* as existing, physical/biological/human Person (Entity)!
+## REM: Exception: Given trust-agreement between Alica and Bob, that is a IS, but it represents given statements in machine-readable notation!
+
+<urn:universe>
+    a                prov:Location ;
+    a                ctx:OuterContext ;
+    rdfs:isDefinedBy [ ] .
+
+<urn:good-money>
+    a                prov:Agent ;
+    a                org:Organization ;
+    prov:atLocation  <urn:universe> ;
+    rdfs:isDefinedBy <urn:good-money> .
+
+## region Happy Boozer
+
+<urn:pub:happy-boozer>
+    a                prov:Agent ;
+    prov:atLocation  <urn:universe> ;
+    a                org:Organization ;
+    org:member       <urn:pub:happy-boozer:employee:jeff> ;
+    a                prov:Location ;
+    rdfs:isDefinedBy <urn:pub:happy-boozer> .
+
+<urn:pub:happy-boozer:seating-area:bar>
+    a                prov:Location ;
+    prov:atLocation  <urn:pub:happy-boozer> ;
+    rdfs:isDefinedBy <urn:pub:happy-boozer> .
+
+<urn:pub:happy-boozer:beer-garden>
+    a                prov:Location ;
+    prov:atLocation  <urn:pub:happy-boozer> ;
+    rdfs:isDefinedBy <urn:pub:happy-boozer> .
+
+<urn:pub:happy-boozer:employee:jeff>
+    skos:related     <urn:person:jeff> ;
+    rdfs:isDefinedBy <urn:pub:happy-boozer> .
+
+## endregion Happy Boozer
+
+<urn:person:jeff>
+    a                foaf:Person ;
+    rdfs:isDefinedBy <urn:person:jeff> .
+
+<urn:person:bob>
+    a                foaf:Person ;
+    foaf:knows       <urn:person:alice> ;
+    rdfs:isDefinedBy <urn:person:bob> .
+
+## region IS TRUST
+
+<urn:person:bob:policy:trust:rule:permission:for:alice#creditcard-main>
+    a                odrl:Permission ;
+    odrl:assigner    <urn:person:bob> ;
+    odrl:assignee    <urn:person:alice> ;
+    rdfs:isDefinedBy <urn:person:bob> .
+
+<urn:person:alice>
+    a                 foaf:Person ;
+    foaf:knows        <urn:person:bob> ;
+    credential:wallet <urn:person:alice:creditcard-main> ;
+    rdfs:isDefinedBy  <urn:person:alice> .
+
+<urn:person:alice:creditcard-main>
+    a                            credential:Credential ;
+    credential:issuer            <urn:good-money> ;
+    credential:validFrom         "2020-01-01T00:00:00Z"^^xsd:dateTime ;
+    credential:validTo           "2025-01-01T00:00:00Z"^^xsd:dateTime ;
+    credential:credentialSubject [ a              credential:Subject ;
+                                   rdfs:label     "4242-4242-4242-4242" ;
+                                   foaf:firstName "Alice" ; ] ;
+    ## transfers:
+    ##   [a Transfer, prov:Entity; prov:generatedAtTime ""^^xsd:dateTime; ],
+    ##   [a Transfer, prov:Entity; prov:generatedAtTime ""^^xsd:dateTime; ] ;
+    rdfs:isDefinedBy             <urn:good-money> .
+
+<urn:person:alice:policy:trust:rule:permission:for:bob#muscle-car>
+    a                odrl:Permission ;
+    odrl:assigner    <urn:person:alice> ;
+    odrl:assignee    <urn:person:bob> ;
+    rdfs:isDefinedBy <urn:person:alice> .
+
+<urn:universe:policy:trust:between:alice:and:bob>
+    a                trust:Trust ;
+    odrl:permission  <urn:person:bob:policy:trust:rule:permission:for:alice#creditcard-main> ;
+    odrl:permission  <urn:person:alice:policy:trust:rule:permission:for:bob#muscle-car> ;
+    rdfs:isDefinedBy <urn:person:alice>, <urn:person:bob> .
+
+## endregion IS TRUST
+
+## endregion IS
+
+## region PRESENTATION (self-declaration, here: Alice)
+
+<urn:person:alice:as:subject>
+    a                ctx:Subject ;  ## REM: Alice is the Subject of Context.
+    a                ctx:Observer ; ## REM: Alice is the Observer of Reality and records it.
+    a                ctx:Analyser ; ## REM: Alice is analysing all things that are happening.
+    a                ctx:Executor ; ## REM: Alice will execute all issued Actions, those are expressed by the Analyser.
+    a                ctx:Issuer ;   ## REM: Alice is the Issuer and presents recorded
+    a                prov:Person ;
+    a                foaf:Person ;
+    ## TODO: a                skos:Concept ; ## TODO: TBC:
+    ctx:individual   ctx:Human ;
+    skos:related     <urn:person:alice> ;
+    foaf:knows       <urn:person:bob> ;
+    trust:trust      <urn:universe:policy:trust:between:alice:and:bob> ;
+    ctx:outerContext <urn:universe> ;
+    ctx:context      <urn:person:alice:context:2024-02-19T21:13:14.042Z> ;
+    ctx:innerContext <urn:person:alice:context:inner> ;
+#    ctx:event        [ a                    ctx:Event ;
+#                       dct:description      "thirsty" ;
+#                       prov:generatedAtTime "2024-02-19T21:10:08Z"^^xsd:dateTime ; ## REM: 13 Minutes ago, Alice saw Jeff for the very first time...
+#                       prov:wasGeneratedBy  [ a                  ctx:Percieve, prov:Activity ;
+#                                              dct:description    "Feeling thirsty."@en ;
+#                                              prov:startedAtTime "2024-02-19T20:45:10Z"^^xsd:dateTime ;
+#                                              prov:endedAtTime   "2024-02-19T21:10:08Z"^^xsd:dateTime ; ] ; ] ;
+    rdfs:isDefinedBy <urn:person:alice> .
+
+<urn:person:alice:context:inner>
+    a                ctx:InnerContext ;
+    rdfs:isDefinedBy [ rdfs:label "I do not know"@en ] .
+
+<urn:person:alice:context:outer>
+    a                ctx:OuterContext ;
+    rdfs:isDefinedBy <urn:person:alice> .
+
+<urn:person:alice:context:environment:barkeeper>
+    a                    ctx:Actor ;
+    prov:generatedAtTime "2024-02-19T21:00:14.042Z"^^xsd:dateTime ; ## REM: 13 Minutes ago, Alice saw Jeff for the very first time...
+    skos:related         <urn:person:jeff> ;
+    rdfs:isDefinedBy     <urn:person:alice> .
+
+<urn:person:alice:context:environment:beer-mug>
+    a                    prov:Entity ;
+    rdfs:label           "Beer mug"@en ;
+    prov:generatedAtTime "2024-02-19T21:09:59Z"^^xsd:dateTime ; ## REM: 13 Minutes ago, Alice saw Jeff
+    rdfs:isDefinedBy     <urn:person:alice:context:environment:barkeeper> .
+
+<urn:person:alice:context:environment:bob>
+    a                    ctx:Actor ;
+    prov:generatedAtTime "2019-03-11T23:00:01.099Z"^^xsd:dateTime ; ## RME: Bob for five years...
+    skos:related         <urn:person:bob> ;
+    rdfs:isDefinedBy     <urn:person:alice> .
+
+## region ACTIVITY
+## region ACTIVITY Alice
+<urn:person:alice:activity:dringking#87654321>
+    a                  prov:Activity ;
+    dct:description    "Drinking beer."@en ;
+    prov:wasStartedBy  <urn:person:alice:as:subject> ;
+    prov:wasEndedBy    <urn:person:alice:as:subject> ;
+    prov:startedAtTime "2024-02-19T21:10:10Z"^^xsd:dateTime ;
+    prov:endedAtTime   "2024-02-19T21:10:15Z"^^xsd:dateTime ;
+    prov:used          <urn:person:alice:context:environment:beer-mug> ;
+    rdfs:isDefinedBy   <urn:person:alice> .
+
+<urn:person:alice:activity:shaking:hand#91929394959697989>
+    a                  prov:Activity ;
+    dct:description    "Handshaking (with Bob)."@en ;
+    prov:wasStartedBy  <urn:person:alice:as:subject> ;
+    prov:wasEndedBy    <urn:person:alice:context:environment:bob> ;
+    prov:startedAtTime "2024-02-19T21:13:10Z"^^xsd:dateTime ;
+    prov:endedAtTime   "2024-02-19T21:13:14.041Z"^^xsd:dateTime ;
+    ## REM: to be precise :: prov:used <urn:person:alice:as:subject:hand:right> ;
+    ## REM: to be precise :: prov:used <urn:person:alice:context:environment:bob:hand:right> ;
+    rdfs:isDefinedBy   <urn:person:alice> .
+## endregion ACTIVITY Alice
+## endregion ACTIVITY
+
+## region PRESENTATION
+
+## region WAS, PAST ("2024-02-19T21:13:14.042Z")
+
+<urn:person:alice:context:2024-02-19T21:13:14.042Z>
+    a                    ctx:Context ;
+    ctx:system           ctx:Physical ;
+    ## REM: 'ctx:issuer': if issuer equals subject given Context is
+    ctx:issuer           <urn:person:alice:as:subject> ;
+    ## REM: record start, end
+    ctx:hasBeginning     "2024-02-19T21:09:08Z"^^xsd:dateTime ;
+    ctx:hasEnd           "2024-02-19T21:13:14.041Z"^^xsd:dateTime ;
+    prov:generatedAtTime "2024-02-19T21:13:14.042Z"^^xsd:dateTime ;
+    ctx:validFrom        "2024-02-19T21:13:14.042Z"^^xsd:dateTime ;
+    ctx:validTo          "2024-02-20T00:00:00Z"^^xsd:dateTime ;
+    prov:atLocation      <urn:pub:happy-boozer:seating-area:bar> ;
+    ctx:actor            <urn:person:alice:as:subject> ;
+    ctx:actor            <urn:person:alice:context:environment:bob> ;
+    ctx:subject          <urn:person:alice:as:subject> ;
+    ctx:target           <urn:person:alice:context:environment:bob> ;
+    ctx:environment      <urn:person:alice:context:environment:43> ;
+    ctx:activity         <urn:person:alice:activity:dringking#87654321>,
+                         <urn:person:alice:activity:shaking:hand#91929394959697989> ;
+    ## REM: THIS Context is target of following policy:
+    ctx:termsOfUse       <urn:person:alice:policy:bar-activities-protection> ;
+    rdfs:isDefinedBy     <urn:person:alice> .
+
+<urn:person:alice:context:environment:43>
+    a                ctx:Environment ;
+    ctx:actor        <urn:person:alice:context:environment:barkeeper> ;
+    ctx:actor        <urn:person:alice:context:environment:bob> ;
+    entity:entity    <urn:person:alice:context:environment:beer-mug> ;
+    rdfs:isDefinedBy <urn:person:alice> .
+
+<urn:person:alice:policy:bar-activities-protection>
+    a                odrl:Policy ;
+    dct:description  """Do not copy! Red once, than delete!"""@en ;
+    rdfs:isDefinedBy <urn:person:alice> .
+
+## region NOW (Presentation)
+
+<urn:person:alice:presentation:context:2024-02-19T21:13:14.043Z>
+    a                    ctx:Presentation ;
+    prov:generatedAtTime "2024-02-19T21:13:14.043Z"^^xsd:dateTime ;
+    ctx:context          <urn:person:alice:context:2024-02-19T21:13:14.042Z> ;
+    rdfs:isDefinedBy     <urn:person:alice> .
+
+## endregion WAS (Presentation)
+
+## endregion WAS
+
+<urn:universe>
+    rdfs:isDefinedBy [ rdfs:label "I do not know"@en ] .

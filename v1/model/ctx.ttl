@@ -1,0 +1,741 @@
+@prefix dc:          <http://purl.org/dc/elements/1.1/> .
+@prefix dct:         <http://purl.org/dc/terms/> .
+@prefix description: <http://purl.org/dc/terms/description> .
+@prefix owl:         <http://www.w3.org/2002/07/owl#> .
+@prefix org:         <http://www.w3.org/ns/org#> .
+@prefix odrl:        <http://www.w3.org/ns/odrl/2/> .
+@prefix profile:     <http://www.w3.org/ns/dx/prof/> .
+@prefix rdf:         <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:        <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix role:        <http://www.w3.org/ns/dx/prof/role/> .
+@prefix skos:        <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann:        <http://purl.org/vocab/vann/> .
+@prefix voaf:        <http://purl.org/vocommons/voaf#> .
+@prefix void:        <http://rdfs.org/ns/void#> .
+@prefix xsd:         <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix prov:        <http://www.w3.org/ns/prov#> .
+#@prefix generatedAtTime: <http://www.w3.org/ns/prov#generatedAtTime> .
+#@prefix actedOnBehalfOf: <http://www.w3.org/ns/prov#actedOnBehalfOf> .
+#@prefix wasGeneratedBy:  <http://www.w3.org/ns/prov#wasGeneratedBy> .
+#@prefix wasAttributedTo: <http://www.w3.org/ns/prov#wasAttributedTo> .
+#@prefix lds:         <https://github.com/nicosResearchAndDevelopment/LDS/> .
+#@prefix entity:      <https://github.com/nicosResearchAndDevelopment/LDS/model/concept/higher/entity/> .
+#@prefix credential:  <https://github.com/nicosResearchAndDevelopment/LDS/model/concept/higher/credential/> .
+
+@prefix ctx:         <https://github.com/nicosResearchAndDevelopment/ctx#> .
+
+ctx:
+    a                             voaf:Vocabulary ;
+    a                             owl:Ontology ;
+    skos:prefLabel                "Context Ontology (CTX), Version 1"^^xsd:string ;
+    rdfs:label                    "Context Ontology (CTX), Version 1"@en ;
+    dct:title                     "Model for CTX"@en ;
+    dct:description               """"""@en ;
+## TODO : cc:license                    <> ;
+    dct:creator                   <https://jlangkau.solidweb.org/> ;
+    dct:publisher                 <https://www.nicos-ag.com> ;
+    dct:created                   "2023-07-19"^^xsd:date ;
+    ## TODO: dct:modified                  {{now.date}} ;
+    owl:versionInfo               "1.0.0" ;
+    ## TODO: owl:versionInfo               {{version.ontology}} ;
+    vann:preferredNamespaceUri    "https://github.com/nicosResearchAndDevelopment/ctx#"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "ctx:" ;
+    void:vocabulary               vann:, void:, voaf:, dct: ; .
+
+credential:wallet
+    rdfs:domain      ctx:Actor ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:hasBeginning
+    a                owl:DatatypeProperty ;
+    rdfs:label       "Has beginning"@en ;
+    rdfs:label       "Startzeitpunkt"@de ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       xsd:dateTimeStamp ;
+    rdfs:comment     """Startpoint (in time) of recoding the Context."""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:hasEnd
+    a                owl:DatatypeProperty ;
+    rdfs:label       "Has end"@en ;
+    rdfs:label       "Endzeitpunkt"@de ;
+    dct:description  """Endpoint (in time) of recoding the Context."""@en ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       xsd:dateTimeStamp ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:validFrom
+    a                owl:DatatypeProperty ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       xsd:dateTimeStamp ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:validTo
+    a                owl:DatatypeProperty ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       xsd:dateTimeStamp ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:termsOfUse
+    a                rdf:Property ;
+    rdfs:label       "Terms of use"@en ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       odrl:Policy ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Context
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Entity ;
+    rdfs:label       "Context"@en ;
+    rdfs:label       "Kontext"@de ;
+    skos:notation    "ctx:Context"^^xsd:string ;
+    skos:prefLabel   "Context"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:context
+    a                owl:ObjectProperty ;
+    rdfs:label       "Context"@en ;
+    rdfs:label       "Kontext"@de ;
+    skos:notation    "ctx:context"^^xsd:string ;
+    skos:prefLabel   "Context"^^xsd:string ;
+    rdfs:domain      ctx:Presentation ;
+    rdfs:domain      ctx:Subject ;
+    rdfs:range       ctx:Context ; ## CARD: [0..n]
+    rdfs:isDefinedBy ctx: .
+
+ctx:OuterContext
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Context ;
+    rdfs:label       "Outer Context"@en ;
+    rdfs:label       "Äusserer Kontext"@de ;
+    skos:notation    "ctx:OuterContext"^^xsd:string ;
+    skos:prefLabel   "Outer Context"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:outerContext
+    a                owl:ObjectProperty ;
+    rdfs:label       "Outer Context"@en ;
+    rdfs:label       "Äusserer Kontext"@de ;
+    skos:notation    "ctx:outerContext"^^xsd:string ;
+    skos:prefLabel   "Outer Context"^^xsd:string ;
+    rdfs:domain      ctx:Subject ;
+    rdfs:range       ctx:OuterContext ; ## CARD: [0..1]
+    rdfs:isDefinedBy ctx: .
+
+ctx:InnerContext
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Context ;
+    rdfs:label       "Inner Context"@en ;
+    rdfs:label       "Innerer Kontext"@de ;
+    dct:description  """Only used by Subject."""@en ;
+    skos:notation    "ctx:InnerContext"^^xsd:string ;
+    skos:prefLabel   "Inner Context"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:innerContext
+    a                owl:ObjectProperty ;
+    rdfs:label       "Inner Context"@en ;
+    rdfs:label       "Innerer Kontext"@de ;
+    skos:notation    "ctx:innerContext"^^xsd:string ;
+    skos:prefLabel   "Inner Context"^^xsd:string ;
+    rdfs:domain      ctx:Subject ;
+    rdfs:range       ctx:OuterContext ; ## CARD: [0..1] !!!
+    rdfs:isDefinedBy ctx: .
+
+ctx:Contextualisation
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Entity ;
+    rdfs:label       "Contextualisation"@en ;
+    rdfs:label       "Kontextualisation"@de ;
+    dct:description  """'Contextualisation', the Process of generating a Context."""@en ;
+    skos:notation    "ctx:Contextualisation"^^xsd:string ;
+    skos:prefLabel   "Contextualisation"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Contextualize
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Activity ;
+    rdfs:label       "Contextualize"@en ;
+    rdfs:label       "Kontextualisieren"@de ;
+    skos:notation    "ctx:Contextualize"^^xsd:string ;
+    skos:prefLabel   "Contextualize"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Environment
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Entity ;
+    rdfs:label       "Environment"@en ;
+    rdfs:label       "Umgebung"@de ;
+    skos:notation    "ctx:Environment"^^xsd:string ;
+    skos:prefLabel   "Environment"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:environment
+    a                owl:ObjectProperty ;
+    rdfs:label       "Environment"@en ;
+    rdfs:label       "Umgebung"@de ;
+    skos:notation    "ctx:environment"^^xsd:string ;
+    skos:prefLabel   "Environment"^^xsd:string ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       ctx:Environment ; ## CARD: [1..1]
+    rdfs:isDefinedBy ctx: .
+
+ctx:sector
+    a                rdf:Property ;
+    rdfs:label       "Sector"@en ;
+    rdfs:label       "Sektor"@de ;
+    skos:notation    "ctx:sector"^^xsd:string ;
+    skos:prefLabel   "Sector"^^xsd:string ;
+    rdfs:domain      ctx:Entity ;
+    rdfs:domain      prov:Activity ;
+    rdfs:range       rdfs:Resource ; ## CARD: [0..1] !!!
+    rdfs:comment     """Everything in CTX can be flavoured this relation. Se NIS2, RCE EU-Directives, for example."""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Actor
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Agent ;
+    rdfs:subClassOf  ctx:Entity ;
+    rdfs:label       "Actor"@en ;
+    rdfs:label       "Aktor"@de ;
+    skos:notation    "ctx:Actor"^^xsd:string ;
+    skos:prefLabel   "Actor"^^xsd:string ;
+    skos:broader     ctx:Entity ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:actOnBehalf
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:appointedRepresentative ;
+    rdfs:domain        ctx:Actor ;
+    rdfs:range         ctx:Entity ; ## REM: CARD: [0..1] so it can be `ctx:LegalEntity`, too...
+    rdfs:range         ctx:Actor ;
+    ## TODO: rdfs:comment       """ prov:actedOnBehalf versus ctx:actOnBehalf"""@en ;
+    rdfs:isDefinedBy   lds: .
+
+ctx:actor
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:actor ;
+    rdfs:label         "Actor"@en ;
+    rdfs:label         "Aktor"@de ;
+    skos:notation      "ctx:actor"^^xsd:string ;
+    skos:prefLabel     "Actor"^^xsd:string ;
+    rdfs:domain        ctx:Context ;     ## REM: indirect relation
+    rdfs:domain        ctx:Environment ; ## REM: direct relation
+    rdfs:range         ctx:Actor ; ## CARD: [0..n]
+    rdfs:isDefinedBy   ctx: .
+
+ctx:Observer
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Actor ;
+    rdfs:label       "Observer"@en ;
+    rdfs:label       "Beobachter"@de ;
+    dct:description  """Ongoing Processing of 'Contextualisation', generating a Context."""@en ;
+    skos:notation    "ctx:Observer"^^xsd:string ;
+    skos:prefLabel   "Observer"^^xsd:string ;
+    rdfs:comment     """Input 'ctx:Context', output: 'ctx:Context'."""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:observer
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:actor ;
+    rdfs:label         "Observer"@en ;
+    rdfs:label         "Beobachter"@de ;
+    skos:notation      "ctx:observer"^^xsd:string ;
+    skos:prefLabel     "Observer"^^xsd:string ;
+    rdfs:range         ctx:Observer ; ## CARD: [0..n]
+    rdfs:isDefinedBy   ctx: .
+
+ctx:Perception
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Entity ;
+    rdfs:label       "Perception"@en ;
+    rdfs:label       "Wahrnehmung"@de ;
+    dct:description  """'Perception'"""@en ;
+    skos:notation    "ctx:Perception"^^xsd:string ;
+    skos:prefLabel   "Perception"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Percieve
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Activity ;
+    rdfs:label       "Percieve"@en ;
+    rdfs:label       "Wahrnehmen"@de ;
+    skos:notation    "ctx:Percieve"^^xsd:string ;
+    skos:prefLabel   "Percieve"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Event
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Entity ;
+    rdfs:label       "Event"@en ;
+    rdfs:label       "Ereignis"@de ;
+    dct:description  """'Event'"""@en ;
+    skos:notation    "ctx:Event"^^xsd:string ;
+    skos:prefLabel   "Event"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:event
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:actor ;
+    rdfs:label         "Event"@en ;
+    rdfs:label         "Ereignis"@de ;
+    skos:notation      "ctx:event"^^xsd:string ;
+    skos:prefLabel     "Event"^^xsd:string ;
+    rdfs:domain        ctx:Context ;
+    rdfs:range         ctx:Event ; ## CARD: [0..1] !!!
+    rdfs:isDefinedBy   ctx: .
+
+ctx:Analyser
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Actor ;
+    rdfs:label       "Analyser"@en ;
+    rdfs:label       "Analysator"@de ;
+    dct:description  """Driver of ongoing 'ctx:Evaluation'-Process using given Contexts spend by one or more Obersver, working on Policies, Rules and Constraints, delegating Actions to given Executor."""@en ;
+    skos:notation    "ctx:Analyser"^^xsd:string ;
+    skos:prefLabel   "Analyser"^^xsd:string ;
+    rdfs:comment     """Input 'ctx:Context', output: 'ctx:Context'."""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:analyser
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:actor ;
+    rdfs:label         "Analyser"@en ;
+    rdfs:label         "Analysator"@de ;
+    skos:notation      "ctx:analyser"^^xsd:string ;
+    skos:prefLabel     "Analyser"^^xsd:string ;
+    rdfs:range         ctx:Analyser ; ## CARD: [0..n]
+    rdfs:isDefinedBy   ctx: .
+
+ctx:Evaluation
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Entity ;
+    rdfs:label       "Evaluation"@en ;
+    rdfs:label       "Auswertung"@de ;
+    dct:description  """'Evaluation', the Process executed (activity: 'ctx:Evaluating') by given Analyzer utilizing Oberserver's Context, generating none, one or many Actions, those are executed by given Executor."""@en ;
+    skos:notation    "ctx:Evaluation"^^xsd:string ;
+    skos:prefLabel   "Evaluation"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Evaluating
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Activity ;
+    rdfs:label       "Evaluating"@en ;
+    rdfs:label       "Auswerten"@de ;
+    skos:notation    "ctx:Evaluating"^^xsd:string ;
+    skos:prefLabel   "Evaluating"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Executor
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Actor ;
+    rdfs:label       "Executor"@en ;
+    rdfs:label       "Ausführer"@de ;
+    skos:notation    "ctx:Executor"^^xsd:string ;
+    skos:prefLabel   "Executor"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Execution
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Entity ;
+    rdfs:label       "Execution"@en ;
+    rdfs:label       "Ausführung"@de ;
+    dct:description  """'Execution', the Process executed (activity: 'ctx:Evaluating') by given Executor fullfilling Analyser's instruction (here: defined actions)."""@en ;
+    skos:notation    "ctx:Execution"^^xsd:string ;
+    skos:prefLabel   "Execution"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Executing
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Activity ;
+    rdfs:label       "Executing"@en ;
+    rdfs:label       "Ausführen"@de ;
+    skos:notation    "ctx:Executing"^^xsd:string ;
+    skos:prefLabel   "Executing"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Issuer
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Actor ;
+    rdfs:label       "Issuer"@en ;
+    rdfs:label       "Herausgeber"@de ;
+    skos:notation    "ctx:Issuer"^^xsd:string ;
+    skos:prefLabel   "Issuer"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:issuer
+    a                owl:ObjectProperty ;
+    rdfs:label       "Issuer"@en ;
+    rdfs:label       "Herausgeber"@de ;
+    skos:notation    "ctx:issuer"^^xsd:string ;
+    skos:prefLabel   "Issuer"^^xsd:string ;
+    rdfs:domain      ctx:Context ;
+    rdfs:domain      ctx:Presentation ;
+    rdfs:range       ctx:Issuer ; ## CARD: [1..1] !!!
+    rdfs:isDefinedBy ctx: .
+
+ctx:Issuance
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Entity ;
+    rdfs:label       "Issuance"@en ;
+    rdfs:label       "Herausgabe"@de ;
+    dct:description  """'Issuance', the Process executed (activity: 'ctx:Issuing') by given Issuer."""@en ;
+    skos:notation    "ctx:Issuance"^^xsd:string ;
+    skos:prefLabel   "Issuance"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Issuing
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Activity ;
+    rdfs:label       "Issuing"@en ;
+    rdfs:label       "Hersausgeben"@de ;
+    dct:description  """This Activity issues a Context, possibly wrapped by given Presentation ('ctx:Presentation') or a Presentation wrapping given Context."""@en ;
+    skos:notation    "ctx:Issuing"^^xsd:string ;
+    skos:prefLabel   "Issuing"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Subject
+    a                owl:Class ;
+    rdfs:subClassOf  ctx:Actor ;
+    rdfs:label       "Subject"@en ;
+    rdfs:label       "Subjekt"@de ;
+    skos:notation    "ctx:Subject"^^xsd:string ;
+    skos:prefLabel   "Subject"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:subject
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:actor ;
+    rdfs:label         "Subject"@en ;
+    rdfs:label         "Subjekt"@de ;
+    skos:notation      "ctx:subject"^^xsd:string ;
+    skos:prefLabel     "Subject"^^xsd:string ;
+    rdfs:domain        ctx:Context ;
+    rdfs:range         ctx:Subject ; ## CARD: [1..1] !!!
+    rdfs:isDefinedBy   ctx: .
+
+ctx:subjectOf
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:actor ;
+    rdfs:label         "Subject of"@en ;
+    rdfs:label         "Subjekt von"@de ;
+    skos:notation      "ctx:subjectOf"^^xsd:string ;
+    skos:prefLabel     "Subject of"^^xsd:string ;
+    rdfs:domain        ctx:Subject ;
+    rdfs:range         ctx:Context ; ## CARD: [1..n] !!!
+    rdfs:isDefinedBy   ctx: .
+
+ctx:activity
+    a                owl:ObjectProperty ;
+    rdfs:label       "Activity"@en ;
+    rdfs:label       "Aktivität"@de ;
+    skos:notation    "ctx:Activity"^^xsd:string ;
+    skos:prefLabel   "Activity"^^xsd:string ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       prov:Activity ; ## CARD: [0..1] !!! ## REM: none or one in time!
+    rdfs:isDefinedBy ctx: .
+
+ctx:target
+    a                rdf:Property ;
+    rdfs:label       "Target"@en ;
+    rdfs:label       "Ziel"@de ;
+    skos:notation    "ctx:target"^^xsd:string ;
+    skos:prefLabel   "Target"^^xsd:string ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       rdfs:Resource ; ## CARD: [0..1] !!!
+    rdfs:isDefinedBy ctx: .
+
+## region System (Concept)
+
+ctx:System
+    a                owl:Class ;
+    a                skos:Concept ;
+    rdfs:subClassOf  owl:Thing ;
+    rdfs:label       "System"@en ;
+    rdfs:label       "System"@de ;
+    skos:notation    "ctx:System"^^xsd:string ;
+    skos:prefLabel   "System"^^xsd:string ;
+    skos:narrower    ctx:Cyber ;
+    skos:narrower    ctx:Physical ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:system
+    a                owl:ObjectProperty ;
+    rdfs:label       "System"@en ;
+    rdfs:label       "System"@de ;
+    skos:notation    "ctx:system"^^xsd:string ;
+    skos:prefLabel   "System"^^xsd:string ;
+    rdfs:domain      ctx:Context ;
+    rdfs:range       ctx:System ; ## CARD: [0..n]
+    rdfs:isDefinedBy ctx: .
+
+## region System NamedIndividuals
+
+ctx:Cyber
+    a                ctx:System, skos:Concept, owl:NamedIndividual ;
+    rdfs:label       "Cyber"@en ;
+    rdfs:label       "Cyber"@de ;
+    skos:notation    "ctx:Cyber"^^xsd:string ;
+    skos:prefLabel   "Cyber"^^xsd:string ;
+    skos:broader     ctx:System ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Physical
+    a                ctx:System, skos:Concept, owl:NamedIndividual ;
+    rdfs:label       "Physical"@en ;
+    rdfs:label       "Physical"@de ;
+    skos:notation    "ctx:Physical"^^xsd:string ;
+    skos:prefLabel   "Physical"^^xsd:string ;
+    skos:broader     ctx:System ;
+    rdfs:isDefinedBy ctx: .
+
+## endregion System NamedIndividual
+
+## region System Individual
+
+ctx:Individual
+    a                owl:Class ;
+    a                skos:Concept ;
+    rdfs:subClassOf  owl:Thing ;
+    rdfs:label       "Individual"@en ;
+    rdfs:label       "Individual"@de ;
+    skos:notation    "ctx:Individual"^^xsd:string ;
+    skos:prefLabel   "Individual"^^xsd:string ;
+    skos:narrower    ctx:Natural ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:individual
+    a                owl:ObjectProperty ;
+    rdfs:label       "Individual"@en ;
+    rdfs:label       "Individual"@de ;
+    skos:notation    "ctx:individual"^^xsd:string ;
+    skos:prefLabel   "Individual"^^xsd:string ;
+    rdfs:domain      ctx:Actor ;
+    rdfs:range       ctx:Individual ; ## CARD: [0..1]
+    rdfs:isDefinedBy ctx: .
+
+ctx:Natural
+    a                owl:Class ;
+    a                skos:Concept ;
+    rdfs:subClassOf  ctx:Individual ;
+    rdfs:label       "Natural"@en ;
+    rdfs:label       "Natürlich"@de ;
+    skos:notation    "ctx:Natural"^^xsd:string ;
+    skos:prefLabel   "Natural"^^xsd:string ;
+    skos:braoder     ctx:Individual ;
+    skos:narrower    ctx:Human ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Biological
+    a                owl:Class ;
+    a                skos:Concept ;
+    rdfs:subClassOf  ctx:Natural ;
+    rdfs:label       "Biological"@en ;
+    rdfs:label       "Künstlich"@de ;
+    skos:notation    "ctx:Biological"^^xsd:string ;
+    skos:prefLabel   "Biological"^^xsd:string ;
+    skos:braoder     ctx:Natural ;
+    skos:narrower    ctx:Faunal ;
+    skos:narrower    ctx:Vegetal ;
+    skos:narrower    ctx:Human ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Faunal
+    a                owl:Class ;
+    a                skos:Concept ;
+    rdfs:subClassOf  ctx:Biological ;
+    rdfs:label       "Faunal"@en ;
+    rdfs:label       "Tierisch"@de ;
+    skos:notation    "ctx:Faunal"^^xsd:string ;
+    skos:prefLabel   "Faunal"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:broader     ctx:Individual ;
+    skos:broader     ctx:Natural ;
+    skos:broader     ctx:Biological ;
+    skos:narrower    ctx:Animal ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Vegetal
+    a                owl:Class ;
+    a                skos:Concept ;
+    rdfs:subClassOf  ctx:Biological ;
+    rdfs:label       "Vegetal"@en ;
+    rdfs:label       "Pflanzlich"@de ;
+    skos:notation    "ctx:Vegetal"^^xsd:string ;
+    skos:prefLabel   "Vegetal"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:broader     ctx:Individual ;
+    skos:broader     ctx:Natural ;
+    skos:broader     ctx:Biological ;
+    skos:narrower    ctx:Plant ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Artificial
+    a                owl:Class ;
+    a                skos:Concept ;
+    rdfs:subClassOf  ctx:Individual ;
+    rdfs:label       "Artificial"@en ;
+    rdfs:label       "Künstlich"@de ;
+    skos:notation    "ctx:Artificial"^^xsd:string ;
+    skos:prefLabel   "Artificial"^^xsd:string ;
+    skos:braoder     ctx:Individual ;
+    skos:narrower    ctx:Device ;
+    skos:narrower    ctx:Robot ;
+    skos:narrower    ctx:Service ;
+    skos:narrower    ctx:ArtificialIntelligence ;
+    rdfs:isDefinedBy ctx: .
+
+## region System Individual NamedIndividuals
+
+ctx:Human
+    a                ctx:Biological ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Human"@en ;
+    rdfs:label       "Human"@de ;
+    skos:notation    "ctx:Human"^^xsd:string ;
+    skos:prefLabel   "Human"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:related     ctx:Faunal ;
+    skos:broader     ctx:Individual ;
+    skos:broader     ctx:Biological ;
+    skos:broader     ctx:Natural ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Animal
+    a                ctx:Faunal ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Animal"@en ;
+    rdfs:label       "Tier"@de ;
+    skos:notation    "ctx:Animal"^^xsd:string ;
+    skos:prefLabel   "Animal"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:broader     ctx:Biological ;
+    skos:broader     ctx:Faunal ;
+    skos:broader     ctx:Natural ;
+    skos:broader     ctx:Individual ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Insect
+    a                ctx:Faunal ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Insect"@en ;
+    rdfs:label       "Insekt"@de ;
+    skos:notation    "ctx:Insect"^^xsd:string ;
+    skos:prefLabel   "Insect"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:broader     ctx:Biological ;
+    skos:broader     ctx:Faunal ;
+    skos:broader     ctx:Natural ;
+    skos:broader     ctx:Individual ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Plant
+    a                ctx:Vegetal ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Plant"@en ;
+    rdfs:label       "Pflanze"@de ;
+    skos:notation    "ctx:Plant"^^xsd:string ;
+    skos:prefLabel   "Plant"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:broader     ctx:Biological ;
+    skos:broader     ctx:Vegetal ;
+    skos:broader     ctx:Natural ;
+    skos:broader     ctx:Individual ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Device
+    a                ctx:Artificial ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Device"@en ;
+    rdfs:label       "Gerät"@de ;
+    skos:notation    "ctx:Device"^^xsd:string ;
+    skos:prefLabel   "Device"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:related     ctx:Machine ;
+    skos:broader     ctx:Artificial ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Machine
+    a                ctx:Artificial ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Machine"@en ;
+    rdfs:label       "Maschine"@de ;
+    skos:notation    "ctx:Machine"^^xsd:string ;
+    skos:prefLabel   "Machine"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:related     ctx:Device ;
+    skos:broader     ctx:Artificial ;
+    skos:narrower    ctx:Robot ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Robot
+    a                ctx:Artificial ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Robot"@en ;
+    rdfs:label       "Roboter"@de ;
+    skos:notation    "ctx:Robot"^^xsd:string ;
+    skos:prefLabel   "Robot"^^xsd:string ;
+    skos:related     ctx:Physical ;
+    skos:related     ctx:Device ;
+    skos:broader     ctx:Machine ;
+    skos:broader     ctx:Artificial ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Service
+    a                ctx:Artificial ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Service"@en ;
+    rdfs:label       "Service"@de ;
+    skos:notation    "ctx:Service"^^xsd:string ;
+    skos:prefLabel   "Service"^^xsd:string ;
+    skos:related     ctx:Cyber ;
+    skos:broader     ctx:Artificial ;
+    rdfs:comment     """An Actor, tagged with 'ctx:Service' **SHOULD** be a 'prov:SoftwareAgent', too!."""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:ArtificialIntelligence
+    a                ctx:Artificial ;
+    a                skos:Concept ;
+    a                owl:NamedIndividual ;
+    rdfs:label       "Artificial Intelligence"@en ;
+    rdfs:label       "Künstliche Intelligenz"@de ;
+    skos:notation    "ctx:ArtificialIntelligence"^^xsd:string ;
+    skos:prefLabel   "Artificial Intelligence"^^xsd:string ;
+    skos:related     ctx:Cyber ;
+    skos:broader     ctx:Service ;
+    rdfs:isDefinedBy ctx: .
+
+## endregion System Individual NamedIndividuals
+
+## endregion System Individual
+
+## endregion System
+
+ctx:Presentation
+    a                owl:Class ;
+    rdfs:subClassOf  prov:Entity ;
+    rdfs:label       "Presentation"@en ;
+    rdfs:label       "Präsentation"@de ;
+    skos:notation    "ctx:Presentation"^^xsd:string ;
+    skos:prefLabel   "Presentation"^^xsd:string ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:presentation
+    a                owl:ObjectProperty ;
+    rdfs:label       "Presentation"@en ;
+    rdfs:label       "Präsentation"@de ;
+    skos:notation    "ctx:presentation"^^xsd:string ;
+    skos:prefLabel   "Presentation"^^xsd:string ;
+    rdfs:range       ctx:Presentation ; ## CARD: [0..n]
+    rdfs:isDefinedBy ctx: .
+
+ctx:
+    rdfs:isDefinedBy <https://jlangkau.solidweb.org/> .

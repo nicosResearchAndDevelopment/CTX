@@ -1,0 +1,306 @@
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+@prefix ctx:  <https://github.com/nicosResearchAndDevelopment/ctx#> .
+
+ctx:Entity
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  prov:Entity ;
+    skos:notation    "ctx:Entity"^^xsd:string ;
+    skos:prefLabel   "Entity"@en ;
+    skos:prefLabel   "Entität"@de ;
+    skos:narrower    ctx:Actor ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:relation
+    a                rdf:Property ;
+    rdfs:label       "Relation"@en ;
+    rdfs:label       "Relation"@de ;
+    skos:notation    "ctx:relation"^^xsd:string ;
+    skos:prefLabel   "Relation"^^xsd:string ;
+    rdfs:domain      ctx:Entity ;
+    rdfs:range       rdfs:Resource ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:entity
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:relation ;
+    rdfs:label         "Entity"@en ;
+    rdfs:label         "Entität"@de ;
+    skos:notation      "ctx:entity"^^xsd:string ;
+    skos:prefLabel     "Entity"^^xsd:string ;
+    rdfs:range         ctx:Entity ;
+    rdfs:isDefinedBy   ctx: .
+
+ctx:values
+    a                rdf:Property ;
+    rdfs:label       "Values"@en ;
+    rdfs:label       "Werte"@de ;
+    skos:notation    "ctx:values"^^xsd:string ;
+    skos:prefLabel   "Values"^^xsd:string ;
+    ## TODO: skos:narrower    ctx:legalBasis ;  >>> ctx:legalBasis
+    rdfs:domain      ctx:Entity ;
+    rdfs:range       rdfs:Resource ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Legal
+    a                owl:Class, skos:Concept ;
+    skos:notation    "ctx:Legal"^^xsd:string ;
+    skos:prefLabel   "Legal"@en ;
+    skos:prefLabel   "Legal"@de ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:legalBasis
+    a                rdf:Property ;
+    skos:notation    "ctx:legalBasis"^^xsd:string ;
+    skos:prefLabel   "Legal Basis"@en ;
+    skos:prefLabel   "Legale Basis"@de ;
+    rdfs:domain      ctx:Legal ;
+    rdfs:range       rdfs:Resource ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:LegalEntity
+    ## REM: abstract
+    a                owl:Class, skos:Concept ;
+    ## TODO : SHACL
+    rdfs:subClassOf  ctx:Legal ;
+    rdfs:subClassOf  ctx:Entity ;
+    skos:notation    "ctx:LegalEntity"^^xsd:string ;
+    skos:prefLabel   "Legal Entity"@en ;
+    skos:prefLabel   "Legale Entität"@de ;
+    skos:altLabel    "LE"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel LE"^^xsd:string'
+    skos:broader     ctx:Legal ;
+    skos:broader     ctx:Entity ;
+    skos:narrower    ctx:LegalPerson ;
+    skos:narrower    ctx:Organization ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:legalEntityIdentifier
+    a                rdf:Property ;
+    skos:notation    "ctx:legalEntityIdentifier"^^xsd:string ;
+    skos:prefLabel   "Legal Entity Identifier"^^xsd:string ;
+    rdfs:label       "Legal Entity Identifier"@en ;
+    rdfs:label       "Identifier der legalen Entität"@de ;
+    rdfs:domain      ctx:LegalEntity ;
+    ## rdfs:range       ILO (intentionally left open) ;
+    rdfs:comment     """'rdfs:range' :: follows given authoritative Entity, the Issuer, acting on stringent directives or regulations."""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Representative
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:Actor ;
+    skos:notation    "Representative"^^xsd:string ;
+    skos:prefLabel   "Representative"@en ;
+    skos:prefLabel   "Repräsentant"@de ;
+    skos:broader     ctx:Actor ; ## REM: so, ready for `ctx:actBehalfOf`
+    rdfs:isDefinedBy ctx: .
+
+ctx:representative
+    a                owl:ObjectProperty ;
+    skos:notation    "ctx:representative"^^xsd:string ;
+    skos:prefLabel   "Representative"^^xsd:string ;
+    rdfs:label       "Representative"@en ;
+    rdfs:label       "Repräsentant"@de ;
+    ## ILO: rdfs:domain       (intentionally left open)  ;
+    rdfs:range       ctx:Representative ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:represent
+    a                owl:ObjectProperty ;
+    skos:notation    "ctx:representative"^^xsd:string ;
+    skos:prefLabel   "Representative"^^xsd:string ;
+    rdfs:label       "Representative"@en ;
+    rdfs:label       "Repräsentant"@de ;
+    rdfs:domain      ctx:Representative ;
+    rdfs:range       ctx:Entity ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:LegalEntityRepresentative
+    ## REM: abstract
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:Appointment ;       ## REM: `rdfs:subClassOf  ctx:LegalEntityAuthorization` <<<<<<<<<
+    rdfs:subClassOf  ctx:Representative ;
+    ## TODO: TBC: `rdfs:subClassOf  ctx:Authorization` :: here?!?
+    rdfs:subClassOf  ctx:NaturalPerson ;             ## REM: !!! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    skos:notation    "ctx:LegalEntityRepresentative"^^xsd:string ;
+    skos:prefLabel   "Legal Entity Representative"@en ;
+    skos:prefLabel   "Repräsentant der legalen Entität"@de ;
+    skos:altLabel    "LER"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel "LER"^^xsd:string'
+    skos:broader     ctx:Legal ;
+    skos:broader     ctx:LegalEntity ;
+    skos:broader     ctx:NaturalPerson ;
+    skos:broader     ctx:Representative ;
+    skos:narrower    ctx:Appointment ;
+    skos:narrower    ctx:AppointedRepresentative ;
+    rdfs:comment     """We have to keep in mind: if given **Legal Basis** will fully accept Artificial Intelligence, then 'rdfs:subClassOf ctx:NaturalPerson' has to be fixed somehow ;-) ... Used by **LER**"""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:legalEntityRepresentative
+    a                rdf:Property ;
+    skos:notation    "ctx:legalRepresentative"^^xsd:string ;
+    skos:prefLabel   "Legal Representative"^^xsd:string ;
+    rdfs:label       "Legal  Representative"@en ;
+    rdfs:label       "Legaler Repräsentant"@de ;
+    rdfs:domain      ctx:LegalEntity ;
+    rdfs:range       ctx:LegalEntityRepresentative ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Authorization
+    a                owl:Class, skos:Concept ;
+    skos:notation    "ctx:Authorization"^^xsd:string ;
+    skos:prefLabel   "Authorization"@en ;
+    skos:prefLabel   "Autorisierung"@de ;
+    skos:altLabel    "AT"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel AT"^^xsd:string'
+    skos:narrower    ctx:Appointment ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:LegalEntityAuthorization
+    ## REM: abstract
+    a                owl:Class, skos:Concept ;
+    ## TODO : SHACL
+    rdfs:subClassOf  ctx:Authorization ;
+    skos:notation    "ctx:LegalEntityAuthorization"^^xsd:string ;
+    skos:prefLabel   "Legal Entity Authorization"@en ;
+    skos:prefLabel   "Autorisierung der legalen Entität"@de ; ;
+    skos:broader     ctx:Authorization ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Appointment
+    ## REM: abstract
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:LegalEntityAuthorization ;
+    skos:notation    "Appointment"^^xsd:string ;
+    skos:prefLabel   "Appointment"@en ;
+    skos:prefLabel   "Ernennung"@de ;
+    skos:altLabel    "AP"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel AP"^^xsd:string'
+    rdfs:isDefinedBy ctx: .
+
+ctx:AppointedRepresentative
+    a                owl:Class, skos:Concept ;
+    ## TODO : SHACL
+    rdfs:subClassOf  ctx:Appointment ;
+    rdfs:subClassOf  ctx:Representative ;
+    rdfs:subClassOf  ctx:LegalEntityAuthorization ;     ## REM: !!! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    skos:notation    "ctx:AppointedRepresentative"^^xsd:string ;
+    skos:prefLabel   "Appointed Representative"@en ;
+    skos:prefLabel   "Ernannter Repräsentant"@de ;
+    skos:altLabel    "AR"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel AR"^^xsd:string'
+    skos:broader     ctx:Appointment ;
+    skos:broader     ctx:Representative ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:appointedRepresentative
+    a                  owl:ObjectProperty ;
+    rdfs:subPropertyOf ctx:representative ;
+    rdfs:label         "Appointed  Representative"@en ;
+    rdfs:label         "Ernannter Repräsentant"@de ;
+    skos:notation      "ctx:appointedRepresentative"^^xsd:string ;
+    skos:prefLabel     "Appointed Representative"^^xsd:string ;
+    ## REM: `rdfs:domain ctx:LegalEntity` :: makes it stronger, than to glue it to `ctx:Entity` only...
+    rdfs:domain        ctx:Entity ; ## REM: so `ctx:LegalPerson` and `ctx:Organisation`...
+    rdfs:range         ctx:AppointedRepresentative ;
+    rdfs:isDefinedBy   ctx: .
+
+ctx:LegalEntityAppointedRepresentative
+    a                owl:Class, skos:Concept ;
+    ## TODO : SHACL
+    rdfs:subClassOf  ctx:AppointedRepresentative ;
+    skos:notation    "ctx:LegalEntityAppointedRepresentative"^^xsd:string ;
+    skos:prefLabel   "Legal Entity Appointed Representative"@en ;
+    skos:prefLabel   "Ernannter Repräsentant der legalen Entität"@de ;
+    skos:altLabel    "LEAR"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel "LEAR"^^xsd:string'
+    skos:broader     ctx:Legal ;
+    skos:broader     ctx:LegalEntity ;
+    skos:broader     ctx:AppointedRepresentative ;
+    ## TODO: skos:narrower    ctx:LEAR_NP ;
+    ## TODO: skos:narrower    ctx:LEAR_SI ;
+    ## TODO: skos:narrower    ctx:LEAR_AI ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:legalEntityAppointedRepresentative
+    a                owl:ObjectProperty ;
+    skos:notation    "ctx:legalEntityAppointedRepresentative"^^xsd:string ;
+    skos:prefLabel   "Appointed Representatives"^^xsd:string ;
+    rdfs:label       "Appointed  Representatives"@en ;
+    rdfs:label       "Ernannte Repräsentanten"@de ;
+    rdfs:domain      ctx:LegalEntity ;
+    rdfs:range       ctx:LegalEntityAppointedRepresentative ;
+    rdfs:comment     """'rdfs:range' :: follows given authoritative Entity, the Issuer, acting on stringent directives and regulations."""@en ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Person
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:Entity ;
+    rdfs:subClassOf  prov:Person ;
+    rdfs:subClassOf  ctx:Actor ;
+    skos:notation    "ctx:Person"^^xsd:string ;
+    skos:prefLabel   "Person"@en ;
+    skos:prefLabel   "Person"@de ;
+    skos:broader     ctx:Entity ;
+    skos:narrower    ctx:NaturalPerson ;
+    skos:narrower    ctx:LegalPerson ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:NaturalPerson
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:Person ;
+    skos:notation    "ctx:NaturalPerson"^^xsd:string ;
+    skos:prefLabel   "Natural Person"@en ;
+    skos:prefLabel   "Natürliche Person"@de ;
+    skos:altLabel    "NP"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel "NP"^^xsd:string'
+    skos:broader     ctx:Person ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:LegalPerson
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:Person ;
+    rdfs:subClassOf  ctx:LegalEntity ;
+    skos:notation    "ctx:LegalPerson"^^xsd:string ;
+    skos:prefLabel   "Legal Person"@en ;
+    skos:prefLabel   "Legale Person"@de ;
+    skos:altLabel    "LP"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel "LP"^^xsd:string'
+    skos:broader     ctx:Legal ;
+    skos:broader     ctx:Person ;
+    skos:broader     ctx:LegalEntity ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:Organization
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:LegalEntity ;
+    rdfs:subClassOf  prov:Organization ;
+    ## TODO: rdfs:subClassOf  org:Organization ;
+    skos:notation    "ctx:Organization"^^xsd:string ;
+    skos:prefLabel   "Organization"@en ;
+    skos:prefLabel   "Organisation"@de ;
+    skos:altLabel    "O"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel O"^^xsd:string'
+    skos:broader     ctx:LegalEntity ;
+    rdfs:isDefinedBy ctx: .
+
+ctx:SoftwareAgent
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:Actor ;
+    rdfs:subClassOf  prov:SoftwareAgent ;
+    rdfs:subClassOf  ctx:AppointedRepresentative ; ## REM: !!!!!!!!!!!!!!!!!!!!!!! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    skos:notation    "ctx:ServiceInstance"^^xsd:string ;
+    skos:prefLabel   "Service Instance"@en ;
+    skos:prefLabel   "Service-Instanz"@de ;
+    skos:altLabel    "SI"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel "SI"^^xsd:string'
+    rdfs:isDefinedBy ctx: .
+
+ctx:ArtificialIntelligence
+    a                owl:Class, skos:Concept ;
+    rdfs:subClassOf  ctx:SoftwareAgent ;
+    skos:notation    "ctx:ArtificialIntelligence"^^xsd:string ;
+    skos:prefLabel   "Artificial Intelligence"@en ;
+    skos:prefLabel   "Künstliche Intelligenz"@de ;
+    skos:altLabel    "AI"^^xsd:string ; ## TODO: ABBREVIATION@NARR :: 'skos:altLabel AI"^^xsd:string'
+    skos:broader     ctx:Actor ;
+    skos:broader     ctx:SoftwareAgent ;
+    rdfs:isDefinedBy ctx: .
