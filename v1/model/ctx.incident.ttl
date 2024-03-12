@@ -147,6 +147,7 @@ ctx:Intrusion_Physical
 <urn:person:bob:incident:666>
     a                    ctx:Incident ;
     dct:description      """Bob, sitting at happy-boozer's beer-garden, was stitched by a malicious bee. Afterwards he drinks a beer to start the self-healing process."""@en ;
+    ## TODO: ctx:system "System-Physical"^^xsd:string ;
     ctx:incidentCategory ctx:Intrusion_Physical ;
     prov:wasGeneratedBy  <urn:person:bob> ;
     ctx:hasBeginning     "2024-03-08T13:59:01Z"^^xsd:dateTimeStamp ;     ## REM: bee starts stitching
