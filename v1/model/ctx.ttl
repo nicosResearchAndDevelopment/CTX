@@ -213,6 +213,16 @@ ctx:contentType
     rdfs:range       xsd:string ; ## CARD: [0..1], REM: some sort of mime-type...
     rdfs:isDefinedBy ctx: .
 
+ctx:contentEncoding
+    a                owl:DatatypeProperty ;
+    rdfs:label       "Content Encoding"@en ;
+    rdfs:label       "codierung des Inhalts"@de ;
+    skos:notation    "ctx:contentEncoding"^^xsd:string ;
+    skos:prefLabel   "Content encoding"^^xsd:string ;
+    rdfs:domain      ctx:Attachment ;
+    rdfs:range       xsd:string ; ## CARD: [0..1], REM: some sort of known encoding-types...
+    rdfs:isDefinedBy ctx: .
+
 ctx:contentLength
     a                owl:DatatypeProperty ;
     rdfs:label       "Content length"@en ;

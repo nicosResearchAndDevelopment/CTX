@@ -1,0 +1,98 @@
+@prefix dc:          <http://purl.org/dc/elements/1.1/> .
+@prefix dct:         <http://purl.org/dc/terms/> .
+@prefix description: <http://purl.org/dc/terms/description> .
+@prefix owl:         <http://www.w3.org/2002/07/owl#> .
+@prefix org:         <http://www.w3.org/ns/org#> .
+@prefix odrl:        <http://www.w3.org/ns/odrl/2/> .
+@prefix profile:     <http://www.w3.org/ns/dx/prof/> .
+@prefix rdf:         <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:        <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix role:        <http://www.w3.org/ns/dx/prof/role/> .
+@prefix skos:        <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann:        <http://purl.org/vocab/vann/> .
+@prefix voaf:        <http://purl.org/vocommons/voaf#> .
+@prefix void:        <http://rdfs.org/ns/void#> .
+@prefix xsd:         <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix prov:        <http://www.w3.org/ns/prov#> .
+
+@prefix idmef:       <https://datatracker.ietf.org/doc/draft-lehmann-idmefv2#>.
+
+@prefix ctx:         <https://github.com/nicosResearchAndDevelopment/ctx#> .
+
+## EXAMPLE IDMEF A.1.
+
+<https://www.nicos-ag.com/sensor/camera#23>
+    a                ctx:Actor ;
+    rdfs:label       "Camera #23" ;                     ## REM from 'idmef:Name'
+    idmef:IP         "192.0.2.2" ;                      ## TODO: shift it to 'endpoint'
+    idmef:Model      "SuperDuper Camera v1" ;
+    prov:atLocation  "Hallway to server room A1" ;      ## REM from 'idmef:Location'
+    rdfs:isDefinedBy <https://www.nicos-ag.com/> .
+
+<https://www.nicos-ag.com/analyzer/BigBrother>
+    a                prov:SoftwareAgent ;
+    rdfs:label       "BigBrother" ;                     ## REM from 'idmef:Name'
+    idmef:Hostname   "bb.acme.com" ;
+    idmef:IP         "192.0.2.1" ;
+    idmef:Model      "Big Brother v42" ;
+    idmef:Category   "HAR", "FRC" ;
+    idmef:Data       "Images" ;
+    idmef:Method     "Movement", "Biometric", "AI" ;
+    rdfs:isDefinedBy ctx: .
+
+<https://www.nicos-ag.com/atachment#1>
+    a                   ctx:Attachment ;
+    rdfs:label          "wanted" ;
+    ## ctx:file          "urn:bob:mobile:photo:malicious_bee.jpeg"^^xsd:anyURI ;
+    ctx:contentType     "image/jpg"^^xsd:string ;
+    ctx:contentEncoding "base64"^^xsd:string ;
+    ctx:contentLength   "3"^^xsd:nonNegativeInteger ;
+    ctx:content         """abc"""^^xsd:string ;
+    rdfs:isDefinedBy    <https://www.nicos-ag.com/> .
+
+<https://www.nicos-ag.com/atachment#2>
+    a                   ctx:Attachment ;
+    rdfs:label          "wanted" ;
+    ## ctx:file          "urn:bob:mobile:photo:malicious_bee.jpeg"^^xsd:anyURI ;
+    ctx:contentType     "image/jpg"^^xsd:string ;
+    ctx:contentEncoding "base64"^^xsd:string ;
+    ctx:contentLength   "3"^^xsd:nonNegativeInteger ;
+    ctx:content         """abc"""^^xsd:string ;
+    rdfs:isDefinedBy    <https://www.nicos-ag.com/> .
+
+<https://www.nicos-ag.com/incident#819df7bc-35ef-40d8-bbee-1901117370b1>
+    a                    ctx:Incident ;
+    # ctx:system           "system/private/recreation"^^xsd:string ;
+    # ctx:system           "system/physical"^^xsd:string ;
+    # ctx:sector           "gastronomy"^^xsd:string ;
+    ctx:cause            "Malicious"^^xsd:string ;
+    dct:description      """Potential intruder detected"""@en ; ## TODO: TBC: string/language?!?
+    ctx:incidentCategory ctx:Intrusion_Burglary ;
+    prov:wasGeneratedBy  <https://www.nicos-ag.com/analyzer/BigBrother> ;
+    ctx:hasBeginning     "2021-05-10T16:52:13+00:00"^^xsd:dateTimeStamp ;     ## REM: bee starts stitching
+    # ctx:hasEnd           "2024-03-08T15:00:00Z"^^xsd:dateTimeStamp ;     ## REM: bob stops enjoying the sun
+    prov:generatedAtTime "2021-05-10T16:52:13.075994+00:00"^^xsd:dateTimeStamp ; ## REM: Bob writes it down (some sort ;-) of writing)...
+    ## REM: 'ctx:observer <urn:person:bob>' :: Some sort of *Sensor*.
+    ctx:observer         <https://www.nicos-ag.com/sensor/camera#23> ;
+    ctx:analyser         <https://www.nicos-ag.com/analyzer/BigBrother> ;
+    ctx:environment      [ a ctx:Environment ; ] ;
+    idmef:source         [ a               idmef:Source ;
+                           dct:description """Black Organization, aka. APT 4869""" ; ] ;
+    ctx:vector           [ a               ctx:Actor ;
+                           rdfs:label      "John Doe"^^xsd:string ;
+                           dct:description "Codename Vodka, known henchman for APT 4869"@en ;
+                           idmef:Category  "Man" ;
+                           idmef:TI        "Name:FBI-Wanted" ;
+                           ctx:attachment  <https://www.nicos-ag.com/atachment#1> ;
+                           ctx:attachment  <https://www.nicos-ag.com/atachment#2> ; ] ;
+    ctx:attachment       <https://www.nicos-ag.com/atachment#1> ;
+    ctx:attachment       <https://www.nicos-ag.com/atachment#2> ;
+    rdfs:isDefinedBy     <https://www.nicos-ag.com/> .
+
+## EXAMPLE: presentation of given incident
+
+<https://www.nicos-ag.com/presentation/incident/to/sap>
+    a                ctx:Presentation ;
+    ctx:context      <https://www.nicos-ag.com/incident#819df7bc-35ef-40d8-bbee-1901117370b1> ;
+    rdfs:isDefinedBy <https://www.nicos-ag.com/> .
