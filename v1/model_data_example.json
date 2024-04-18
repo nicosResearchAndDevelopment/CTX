@@ -1,0 +1,189 @@
+{
+	"@context": {
+		"dc": "http://purl.org/dc/elements/1.1/",
+		"dct": "http://purl.org/dc/terms/",
+		"description": "http://purl.org/dc/terms/description",
+		"owl": "http://www.w3.org/2002/07/owl#",
+		"org": "http://www.w3.org/ns/org#",
+		"odrl": "http://www.w3.org/ns/odrl/2/",
+		"profile": "http://www.w3.org/ns/dx/prof/",
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+		"role": "http://www.w3.org/ns/dx/prof/role/",
+		"skos": "http://www.w3.org/2004/02/skos/core#",
+		"vann": "http://purl.org/vocab/vann/",
+		"voaf": "http://purl.org/vocommons/voaf#",
+		"void": "http://rdfs.org/ns/void#",
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"prov": "http://www.w3.org/ns/prov#",
+		"nis2": "https://github.com/nicosResearchAndDevelopment/NIS2/",
+		"idmef": "https://datatracker.ietf.org/doc/draft-lehmann-idmefv2#",
+		"ctx": "https://github.com/nicosResearchAndDevelopment/ctx#"
+	},
+	"@graph": {
+		"https://www.nicos-ag.com/sensor/camera#23": {
+			"@id": "https://www.nicos-ag.com/sensor/camera#23",
+			"@type": "ctx:Actor",
+			"rdfs:label": "Camera #23",
+			"idmef:IP": "192.0.2.2",
+			"idmef:Model": "SuperDuper Camera v1",
+			"prov:atLocation": "Hallway to server room A1",
+			"rdfs:isDefinedBy": {
+				"@id": "https://www.nicos-ag.com/"
+			}
+		},
+		"https://www.nicos-ag.com/analyzer/BigBrother": {
+			"@id": "https://www.nicos-ag.com/analyzer/BigBrother",
+			"@type": "prov:SoftwareAgent",
+			"rdfs:label": "BigBrother",
+			"idmef:Hostname": "bb.acme.com",
+			"idmef:IP": "192.0.2.1",
+			"idmef:Model": "Big Brother v42",
+			"idmef:Category": [
+				"HAR",
+				"FRC"
+			],
+			"idmef:Data": "Images",
+			"idmef:Method": [
+				"Movement",
+				"Biometric",
+				"AI"
+			],
+			"rdfs:isDefinedBy": {
+				"@id": "ctx:"
+			}
+		},
+		"https://www.nicos-ag.com/atachment#1": {
+			"@id": "https://www.nicos-ag.com/atachment#1",
+			"@type": "ctx:Attachment",
+			"rdfs:label": "wanted",
+			"ctx:contentType": {
+				"@value": "image/jpg",
+				"@type": "xsd:string"
+			},
+			"ctx:contentEncoding": {
+				"@value": "base64",
+				"@type": "xsd:string"
+			},
+			"ctx:contentLength": {
+				"@value": "3",
+				"@type": "xsd:nonNegativeInteger"
+			},
+			"ctx:content": {
+				"@value": "abc",
+				"@type": "xsd:string"
+			},
+			"rdfs:isDefinedBy": {
+				"@id": "https://www.nicos-ag.com/"
+			}
+		},
+		"https://www.nicos-ag.com/atachment#2": {
+			"@id": "https://www.nicos-ag.com/atachment#2",
+			"@type": "ctx:Attachment",
+			"rdfs:label": "wanted",
+			"ctx:contentType": {
+				"@value": "image/jpg",
+				"@type": "xsd:string"
+			},
+			"ctx:contentEncoding": {
+				"@value": "base64",
+				"@type": "xsd:string"
+			},
+			"ctx:contentLength": {
+				"@value": "3",
+				"@type": "xsd:nonNegativeInteger"
+			},
+			"ctx:content": {
+				"@value": "abc",
+				"@type": "xsd:string"
+			},
+			"rdfs:isDefinedBy": {
+				"@id": "https://www.nicos-ag.com/"
+			}
+		},
+		"https://www.nicos-ag.com/incident#819df7bc-35ef-40d8-bbee-1901117370b1": {
+			"@id": "https://www.nicos-ag.com/incident#819df7bc-35ef-40d8-bbee-1901117370b1",
+			"@type": "ctx:Incident",
+			"ctx:sector": {
+				"@id": "nis2:Manufacturing-ElectricalEquipment_Sector"
+			},
+			"ctx:cause": {
+				"@value": "Malicious",
+				"@type": "xsd:string"
+			},
+			"dct:description": {
+				"@value": "Potential intruder detected",
+				"@language": "en"
+			},
+			"ctx:incidentCategory": {
+				"@id": "ctx:Intrusion_Burglary"
+			},
+			"prov:wasGeneratedBy": {
+				"@id": "https://www.nicos-ag.com/analyzer/BigBrother"
+			},
+			"ctx:hasBeginning": {
+				"@value": "2021-05-10T16:52:13+00:00",
+				"@type": "xsd:dateTimeStamp"
+			},
+			"prov:generatedAtTime": {
+				"@value": "2021-05-10T16:52:13.075994+00:00",
+				"@type": "xsd:dateTimeStamp"
+			},
+			"ctx:observer": {
+				"@id": "https://www.nicos-ag.com/sensor/camera#23"
+			},
+			"ctx:analyser": {
+				"@id": "https://www.nicos-ag.com/analyzer/BigBrother"
+			},
+			"ctx:environment": {
+				"@type": "ctx:Environment"
+			},
+			"idmef:source": {
+				"@type": "idmef:Source",
+				"dct:description": "Black Organization, aka. APT 4869"
+			},
+			"ctx:vector": {
+				"@type": "ctx:Actor",
+				"rdfs:label": {
+					"@value": "John Doe",
+					"@type": "xsd:string"
+				},
+				"dct:description": {
+					"@value": "Codename Vodka, known henchman for APT 4869",
+					"@language": "en"
+				},
+				"idmef:Category": "Man",
+				"idmef:TI": "Name:FBI-Wanted",
+				"ctx:attachment": [
+					{
+						"@id": "https://www.nicos-ag.com/atachment#1"
+					},
+					{
+						"@id": "https://www.nicos-ag.com/atachment#2"
+					}
+				]
+			},
+			"ctx:attachment": [
+				{
+					"@id": "https://www.nicos-ag.com/atachment#1"
+				},
+				{
+					"@id": "https://www.nicos-ag.com/atachment#2"
+				}
+			],
+			"rdfs:isDefinedBy": {
+				"@id": "https://www.nicos-ag.com/"
+			}
+		},
+		"https://www.nicos-ag.com/presentation/incident/to/sap": {
+			"@id": "https://www.nicos-ag.com/presentation/incident/to/sap",
+			"@type": "ctx:Presentation",
+			"ctx:context": {
+				"@id": "https://www.nicos-ag.com/incident#819df7bc-35ef-40d8-bbee-1901117370b1"
+			},
+			"rdfs:isDefinedBy": {
+				"@id": "https://www.nicos-ag.com/"
+			}
+		}
+	}
+}

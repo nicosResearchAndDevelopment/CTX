@@ -117,5 +117,23 @@ ctx:Intrusion_Physical
 
 ## endregion Category Individual
 
+## region SHACL
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ctx:IncidentShape
+    a                sh:NodeShape ;
+    sh:targetClass   ctx:Incident ;
+    sh:property      [ a               sh:PropertyShape ;
+                       sh:path         ctx:sector ;
+                       ## TODO: 'sh:datatype rdfs:Resource' :: is this correct?!?
+                       sh:datatype     rdfs:Resource ;
+                       sh:minInclusive 1 ;
+                       sh:severity     sh:Violation ;
+                       sh:message      """(IncidentShape): An ctx:Incident must not have one or more 'ctx:sector'."""@en ; ] ;
+    rdfs:isDefinedBy ctx: .
+
+## endregion SHACL
+
 ctx:
     rdfs:isDefinedBy <https://jlangkau.solidweb.org/> .

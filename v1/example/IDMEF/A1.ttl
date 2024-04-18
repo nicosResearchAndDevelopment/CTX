@@ -15,9 +15,8 @@
 @prefix xsd:         <http://www.w3.org/2001/XMLSchema#> .
 
 @prefix prov:        <http://www.w3.org/ns/prov#> .
-
+@prefix nis2:        <https://github.com/nicosResearchAndDevelopment/NIS2/> .
 @prefix idmef:       <https://datatracker.ietf.org/doc/draft-lehmann-idmefv2#>.
-
 @prefix ctx:         <https://github.com/nicosResearchAndDevelopment/ctx#> .
 
 ## EXAMPLE IDMEF A.1.
@@ -66,6 +65,7 @@
     # ctx:system           "system/private/recreation"^^xsd:string ;
     # ctx:system           "system/physical"^^xsd:string ;
     # ctx:sector           "gastronomy"^^xsd:string ;
+    ctx:sector           nis2:Manufacturing-ElectricalEquipment_Sector ;
     ctx:cause            "Malicious"^^xsd:string ;
     dct:description      """Potential intruder detected"""@en ; ## TODO: TBC: string/language?!?
     ctx:incidentCategory ctx:Intrusion_Burglary ;

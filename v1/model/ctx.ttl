@@ -275,7 +275,7 @@ ctx:sector
     rdfs:domain      ctx:Entity ;
     rdfs:domain      prov:Activity ;
     rdfs:range       rdfs:Resource ; ## CARD: [0..1] !!!
-    rdfs:comment     """Everything in CTX can be flavoured this relation. Se NIS2, RCE EU-Directives, for example."""@en ;
+    rdfs:comment     """Everything in CTX can be flavoured this relation. See NIS2, RCE EU-Directives, for example."""@en ;
     rdfs:isDefinedBy ctx: .
 
 ctx:cause
