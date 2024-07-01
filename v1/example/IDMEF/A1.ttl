@@ -56,8 +56,8 @@
     ## ctx:file          "urn:bob:mobile:photo:malicious_bee.jpeg"^^xsd:anyURI ;
     ctx:contentType     "image/jpg"^^xsd:string ;
     ctx:contentEncoding "base64"^^xsd:string ;
-    ctx:contentLength   "3"^^xsd:nonNegativeInteger ;
-    ctx:content         """abc"""^^xsd:string ;
+    ctx:contentLength   "4"^^xsd:nonNegativeInteger ;
+    ctx:content         """cdfe"""^^xsd:string ;
     rdfs:isDefinedBy    <https://www.nicos-ag.com/> .
 
 <https://www.nicos-ag.com/incident#819df7bc-35ef-40d8-bbee-1901117370b1>

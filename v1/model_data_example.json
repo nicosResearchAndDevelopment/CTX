@@ -90,11 +90,11 @@
 				"@type": "xsd:string"
 			},
 			"ctx:contentLength": {
-				"@value": "3",
+				"@value": "4",
 				"@type": "xsd:nonNegativeInteger"
 			},
 			"ctx:content": {
-				"@value": "abc",
+				"@value": "cdfe",
 				"@type": "xsd:string"
 			},
 			"rdfs:isDefinedBy": {
